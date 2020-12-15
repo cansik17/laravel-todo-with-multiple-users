@@ -20,7 +20,7 @@ class AdminController extends Controller
             $tasks = Task::where(function ($query) use ($search) {
                 $query->where('note', 'like', '%' . $search . '%');
             })
-                ->orderBy('id', 'desc')->paginate(10);
+                ->orderBy('id', 'desc')->paginate(8);
             $tasks->appends(['search' => $search]);
         } else {
             $tasks = Task::orderBy('id','desc')->paginate(10);
