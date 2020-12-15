@@ -27,7 +27,8 @@ class AdminController extends Controller
         }
        
         
-        $users = User::all();
+        $users = User::whereNotIn('id', ['6'])
+                    ->get();;
         //dd($user);
         $filter = $request->input('filter');
       

@@ -17,10 +17,14 @@ class TaskController extends Controller
 public function __construct()
 {
     $this->middleware('auth');
+    
 }
      
     public function index(Request $request)
     {
+        if (auth()->user()->role === 'admin') {
+            return redirect()->route('admin.index');
+    }
         $tasks = Task::where('user_id', auth()->user()->id)->orderBy('id','desc')->paginate(10);
 
         //$tasks =Task::orderBy('id','desc')->get();
