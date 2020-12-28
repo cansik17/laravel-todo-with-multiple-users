@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+
+
 use Illuminate\Http\Request;
 
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -26,10 +28,11 @@ public function __construct()
             return redirect()->route('admin.index');
     }
         $tasks = Task::where('user_id', auth()->user()->id)->orderBy('id','desc')->paginate(10);
-
-        //$tasks =Task::orderBy('id','desc')->get();
+       // $tasks = Task::latest()->with(['users'])->paginate(10);
+       // $tasks =Task::orderBy('id','desc')->get();
         
-       //dd($tasks);
+        
+      // dd($tasks);
             
         return view('tasks', compact('tasks'));
     }
@@ -47,7 +50,7 @@ public function __construct()
        $search = $request->get('search');
        $tasks = Task::where('user_id', auth()->user()->id)->orderBy('id', 'desc')
         ->where('note', 'like', '%' . $search . '%')
-       ->paginate(1);
+       ->paginate(5);
         $tasks->appends(['search' => $search]);
 
         return view('tasks', compact('tasks'));
@@ -67,10 +70,12 @@ public function __construct()
 
         ]);
 
-        Task::create([
-            'note' => $request->note,
-            'user_id' => auth()->user()->id,
-        ]);
+        // Task::create([
+        //     'note' => $request->note,
+        //     'user_id' => auth()->user()->id,
+        // ]);
+
+        $request->user()->tasks()->create($request->only('note'));
 
 
         return redirect()->route('tasks.index');
@@ -114,10 +119,13 @@ public function __construct()
 
         ]);
 
-        Task::find($id)->update([
-            'note' => $request->note,
-            'user_id' => auth()->user()->id,
-        ]);
+        // Task::find($id)->update([
+        //     'note' => $request->note,
+        //     'user_id' => auth()->user()->id,
+        // ]);
+        $task = Task::find($id) ;
+
+        $task->update($request->only('note'));
 
 
         return redirect()->route('tasks.index');

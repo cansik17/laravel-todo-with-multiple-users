@@ -52,7 +52,7 @@
 				@foreach ($filterTask as $row)
 				@php
 					$note=$row->note;
-					$id=$row->user_id;
+					$id=$row->users->name;
 					$date=$row->updated_at;
 
 				@endphp
@@ -85,7 +85,7 @@
 				@foreach ($tasks as $task)
 				@php
 					$note=$task->note;
-					$id=$task->user_id;
+					$id=$task->users->name;
 					$date=$task->updated_at;
 
 				@endphp

@@ -40,9 +40,10 @@
 					<th>Update</th>
 					<th>Delete</th>
 				</tr>
+				
 				@foreach ($tasks as $task)
                     <tr>
-							<td style="width: 80%">{{$task->note}} </td>
+							<td style="width: 80%">{{$task->note}}  </td>
 							<td style="width: 10%"> {{$task->updated_at}}</td>
 							
 							<td style="width: 5%">
