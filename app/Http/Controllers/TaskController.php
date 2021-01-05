@@ -100,7 +100,11 @@ public function __construct()
      */
     public function edit($id)
     {
-        $tasks = Task::find($id);
+        $tasks = auth()->user()->tasks()->find($id);
+
+        if (!$tasks) {
+            abort(404);
+        }
 
         return view('edit', compact('tasks'));
     }
@@ -123,7 +127,11 @@ public function __construct()
         //     'note' => $request->note,
         //     'user_id' => auth()->user()->id,
         // ]);
-        $task = Task::find($id) ;
+        $task = auth()->user()->tasks()->find($id);
+
+        if (!$task) {
+            abort(403);
+        }
 
         $task->update($request->only('note'));
 
@@ -140,7 +148,11 @@ public function __construct()
     public function destroy($id)
     {
 
-        $tasks = Task::find($id);
+        $tasks = auth()->user()->tasks()->find($id);
+
+        if (!$tasks) {
+            abort(403);
+        }
         //dd($tasks);
         $tasks->delete();
         //toastr()->success('Silindi, seçili eylem başarıyla silinmiştir .');
