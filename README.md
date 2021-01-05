@@ -1,4 +1,4 @@
-## todo list app with multiple user and admin
+## todo list app with multiple user & admin & restapi & laravel/passport
 
 
 * .env file make your own db configuration
